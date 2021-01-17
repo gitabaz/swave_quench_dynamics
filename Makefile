@@ -12,9 +12,9 @@ LIBSAK = -lsundials_arkode -lsundials_nvecopenmp -lm
 a.out: $(SRC_DIR)/main.c $(SRC_DIR)/swave.c $(SRC_DIR)/swave.h
 	gcc -O2 -o $@ $^ $(INC_DIRS) $(LIB_DIRS) $(LIBSAK)
 
-tests: $(TEST_DIR)/tests
+tests: $(TEST_DIR)/tests.out
 
-$(TEST_DIR)/tests: $(TEST_DIR)/swave_tests.c $(SRC_DIR)/swave.c $(SRC_DIR)/swave.h
+$(TEST_DIR)/tests.out: $(TEST_DIR)/swave_tests.c $(SRC_DIR)/swave.c $(SRC_DIR)/swave.h
 	gcc -o $@ $^ $(INC_DIRS) $(LIB_DIRS) $(LIBSCV)
 
 $(OBJ_DIR):
