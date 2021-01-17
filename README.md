@@ -11,4 +11,5 @@ benchmarks for the ODE solve using the Dormand Prince algorithm in each swuite
 in succession and took the lowest time:
 
 Julia (1 core): 16.526554 seconds (17.12 M allocations: 814.778 MiB, 1.40% gc time)
-ARKODE(4 cores openmp nvector): 55 seconds
+
+ARKODE (4 cores openmp nvector): 55 seconds
