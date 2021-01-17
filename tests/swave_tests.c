@@ -46,7 +46,7 @@ static void test_swave_initial_state() {
     double *s = malloc(neq * sizeof(*s));
     swave_set_initial_state(s, qp);
 
-    double g0 = swave_calc_g('I', qp);
+    double g0 = swave_calc_g(D0, qp);
 
     double Delta = g0 * swave_calc_delta(s, qp);
 
@@ -123,8 +123,8 @@ static void test_calc_g() {
     int Nspins = 50000;
     quench_params *qp = swave_quench_init(D0, Df, D, Nspins);
 
-    double g0 = swave_calc_g('I', qp);
-    double gf = swave_calc_g('F', qp);
+    double g0 = swave_calc_g(D0, qp);
+    double gf = swave_calc_g(Df, qp);
     
     assert(fabs(g0 - 0.000114044380) < 1.0e-4);
     assert(fabs(gf - 0.000114044380) < 1.0e-4);

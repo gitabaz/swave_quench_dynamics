@@ -17,8 +17,8 @@ quench_params* swave_quench_init(double D0, double Df, double D, int Nspins) {
         qp->Nspins = Nspins;
         qp->epsk = malloc(Nspins * sizeof(*(qp->epsk)));
         swave_set_epsk(qp);
-        qp->g0 = swave_calc_g('I', qp);
-        qp->gf = swave_calc_g('F', qp);
+        qp->g0 = swave_calc_g(D0, qp);
+        qp->gf = swave_calc_g(Df, qp);
     }
 
     return qp;
@@ -53,23 +53,12 @@ inline double swave_calc_delta(double* s, quench_params *qp) {
     return delta;
 }
 
-double swave_calc_g(char c, quench_params* qp) {
-    double g = 0.0;
-    double delta = 0.0;
+double swave_calc_g(double delta, quench_params* qp) {
     double res = 0.0;
-
-    if (c == 'I') {
-        delta = qp->D0;
-    } else if (c == 'F') {
-        delta = qp->Df;
-    }
-
     for (int i = 0; i < qp->Nspins; i++) {
         res += 1.0 / sqrt(pow(qp->epsk[i], 2) + pow(delta, 2));
     }
-    g = 2.0 / res;
-
-    return g;
+    return 2.0 / res;
 }
 
 inline int swave_eom(realtype t, N_Vector y, N_Vector ydot, void *user_data) {
@@ -79,12 +68,10 @@ inline int swave_eom(realtype t, N_Vector y, N_Vector ydot, void *user_data) {
     quench_params *qp = (quench_params *) user_data;
 
     double delta = qp->gf * swave_calc_delta(ydata, qp);
-
     for (int i = 0; i < qp->Nspins; i++) {
         ydotdata[i]                  = - 2 * qp->epsk[i] * ydata[i + qp->Nspins];
         ydotdata[i + qp->Nspins]     =   2 * qp->epsk[i] * ydata[i] + 2 * delta * ydata[i + 2 * qp->Nspins];
         ydotdata[i + 2 * qp->Nspins] = - 2 * delta * ydata[i + qp->Nspins];
     }
-
     return 0;
 }

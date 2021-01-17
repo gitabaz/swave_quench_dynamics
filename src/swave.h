@@ -18,7 +18,7 @@ void swave_set_initial_state(double *s, quench_params *qp);
 void swave_set_epsk(quench_params *qp);
 void swave_free_quench_params(quench_params *qp);
 
-double swave_calc_g(char c, quench_params* qp);
+double swave_calc_g(double delta, quench_params* qp);
 double swave_calc_delta(double *s, quench_params *qp);
 int swave_eom(realtype t, N_Vector y, N_Vector ydot, void *user_data);
 
