@@ -21,10 +21,12 @@ int main() {
 
     double t0 = 0.0;
     double tf = 100.0;
-    int num_time_steps = 1000;
+    int num_time_steps = 10000;
     double reltol = 1.0e-4;
     double abstol = 1.0e-9;
     int max_num_steps = 10000;
+
+    double *delta = malloc((num_time_steps + 1) * sizeof(*delta));
 
     sunindextype NEQ = 3 * Nspins;
 
@@ -51,7 +53,6 @@ int main() {
 
     double tout = 0.0;
     double dt = tf / num_time_steps;
-    double delta = 0.0;
 
     printf("#N: %d\n", qp->Nspins);
     printf("#D0: %.12f\n", qp->D0);
@@ -60,19 +61,22 @@ int main() {
     printf("#gf: %.12f\n", qp->gf);
 
     time_t start_time = time(NULL);
-    delta = qp->gf * swave_calc_delta(s0data, qp);
-    printf("%.4f,%.12f\n", t0, delta);
+    delta[0] = qp->gf * swave_calc_delta(s0data, qp);
     for (int i = 1; i <= num_time_steps; i++) {
         //flag = CVode(cvode_mem, i * dt, s0, &tout, CV_NORMAL);
         flag = ERKStepEvolve(arkode_mem, i * dt, s0, &tout, ARK_NORMAL);
-        delta = qp->gf * swave_calc_delta(s0data, qp);
-        printf("%.4f,%.12f\n", tout, delta);
+        delta[i] = qp->gf * swave_calc_delta(s0data, qp);
     }
     time_t end_time = time(NULL);
 
     printf("#Elapsed time: %jd seconds\n", end_time - start_time);
 
+    for (int i = 0; i <= num_time_steps; i++) {
+        printf("%.4f,%.12f\n", t0 + i * dt, delta[i]);
+    }
 
+
+    free(delta);
     swave_free_quench_params(qp);
     N_VDestroy(s0);
     ERKStepFree(&arkode_mem);
