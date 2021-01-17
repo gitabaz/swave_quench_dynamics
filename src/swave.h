@@ -11,11 +11,9 @@ typedef struct {
     double D;        // Half bandwidth
     int Nspins;      // Number of spins
     double* epsk;    // energy levels
-    double* scratch; // scratch buffer
 } quench_params;
 
 quench_params* swave_quench_init(double D0, double Df, double D, int Nspins);
-double trapezoidal_integrate(double *f, double a, double b, int n);
 void swave_set_initial_state(double *s, quench_params *qp);
 void swave_set_epsk(quench_params *qp);
 void swave_free_quench_params(quench_params *qp);
