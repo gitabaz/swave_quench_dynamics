@@ -4,12 +4,11 @@
 
 ## Results
 An implementation of the same program simulating the BCS s-wave quench dynamics
-in both SUNDIALS ARKODE and Julia DifferentialEquations.jl. The performance of
-the Julia version is significantly faster for the same algorithm. The
-benchmarks for the ODE solve using the Dormand Prince algorithm in each swuite
-(DP5() in Julia and DORMAND_PRINCE_7_4_5 in ARKODE). I ran each of them twice
-in succession and took the lowest time:
+in different ODE solvers. The amount of time taken to complete for each solver is listed.
+Each solver is using the Dormand Prince algorithm.
 
-Julia (1 core): 16.526554 seconds (17.12 M allocations: 814.778 MiB, 1.40% gc time)
+Julia DP5() (1 core): 16.526554 seconds (17.12 M allocations: 814.778 MiB, 1.40% gc time)
 
-ARKODE (4 cores openmp nvector): 55 seconds
+ARKODE DORMAND_PRINCE_7_4_5 (4 cores openmp nvector): 55 seconds
+
+boost::numeric::odeint (1 cores openmp nvector): 19.4312 seconds

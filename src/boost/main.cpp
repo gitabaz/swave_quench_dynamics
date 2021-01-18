@@ -27,12 +27,12 @@ int main() {
     double D0 = 0.6;
     double Df = 0.8;
     double D = 10.0;
-    int Nspins = 1000;
+    int Nspins = 50000;
 
     swave_quench swq(D0, Df, D, Nspins);
 
     double t0 = 0.0;
-    double tf = 10.0;
+    double tf = 100.0;
     int num_time_steps = 10000;
     double dt = tf / num_time_steps;
     double reltol = 1.0e-4;
@@ -57,8 +57,8 @@ int main() {
     auto start_time = std::chrono::steady_clock::now();
     //size_t steps = integrate(swq, s0, t0, tf, dt, push_back_delta_and_time(swq, delta, times));
     //size_t steps = integrate_times(make_dense_output<error_stepper_type>(abstol, reltol), swq, s0, t0, tf, dt, push_back_delta_and_time(swq, delta,times));
-    size_t steps = integrate_adaptive(make_controlled<error_stepper_type>(abstol, reltol), swq, s0, t0, tf, dt, push_back_delta_and_time(swq, delta,times));
-    //size_t steps = integrate_adaptive(make_dense_output<error_stepper_type>(abstol, reltol), swq, s0, t0, tf, dt, push_back_delta_and_time(swq, delta,times));
+    //size_t steps = integrate_adaptive(make_controlled<error_stepper_type>(abstol, reltol), swq, s0, t0, tf, dt, push_back_delta_and_time(swq, delta,times));
+    size_t steps = integrate_adaptive(make_dense_output<error_stepper_type>(abstol, reltol), swq, s0, t0, tf, dt, push_back_delta_and_time(swq, delta,times));
     auto end_time = std::chrono::steady_clock::now();
 
     std::cout << "#Elapsed time: " << std::chrono::duration<double>(end_time - start_time).count() << " seconds\n";

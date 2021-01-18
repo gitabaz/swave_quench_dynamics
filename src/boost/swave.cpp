@@ -12,7 +12,7 @@ void swave_quench::set_initial_state(std::vector<double> &s) {
     }
 }
 
-inline double swave_quench::calc_delta(const std::vector<double> &s) {
+double swave_quench::calc_delta(const std::vector<double> &s) {
     double delta = 0.0;
     for (int i = 0; i < Nspins_; i++) {
         delta += s[i];
