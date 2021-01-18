@@ -27,12 +27,12 @@ int main() {
     double D0 = 0.6;
     double Df = 0.8;
     double D = 10.0;
-    int Nspins = 50000;
+    int Nspins = 1000;
 
     swave_quench swq(D0, Df, D, Nspins);
 
     double t0 = 0.0;
-    double tf = 100.0;
+    double tf = 10.0;
     int num_time_steps = 10000;
     double dt = tf / num_time_steps;
     double reltol = 1.0e-4;
