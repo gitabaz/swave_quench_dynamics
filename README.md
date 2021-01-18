@@ -11,4 +11,4 @@ Julia DP5() (1 core): 16.526554 seconds (17.12 M allocations: 814.778 MiB, 1.40%
 
 ARKODE DORMAND_PRINCE_7_4_5 (4 cores openmp nvector): 55 seconds
 
-boost::numeric::odeint (1 cores openmp nvector): 19.4312 seconds
+boost::numeric::odeint runge_kutta_dopri5 (1 core): 19.4312 seconds
