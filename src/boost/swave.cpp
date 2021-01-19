@@ -28,7 +28,6 @@ double swave_quench::calc_g(const double delta) {
     return 2.0 / res;
 }
 
-//inline void eom(const std::vector<double> &y, std::vector<double> &ydot, const double t) {
 void swave_quench::operator() (const std::vector<double> &y, std::vector<double> &ydot, const double t) {
     double delta = gf_ * calc_delta(y);
 #pragma omp parallel for
