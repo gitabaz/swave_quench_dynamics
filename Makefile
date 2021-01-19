@@ -17,7 +17,7 @@ a.out: $(SRC_DIR)/main.c $(SRC_DIR)/swave.c $(SRC_DIR)/swave.h
 aboost: aboost.out
 
 aboost.out: $(SRC_DIR)/boost/main.cpp $(SRC_DIR)/boost/swave.cpp #$(SRC_DIR)/boost/swave.hpp
-	$(CXX) -O2 $^ -I/home/olabian/opt/boost_1_75_0 -o $@
+	$(CXX) -fopenmp -O2 $^ -I/home/olabian/opt/boost_1_75_0 -o $@
 
 tests: $(TEST_DIR)/tests.out
 

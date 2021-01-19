@@ -31,6 +31,7 @@ double swave_quench::calc_g(const double delta) {
 //inline void eom(const std::vector<double> &y, std::vector<double> &ydot, const double t) {
 void swave_quench::operator() (const std::vector<double> &y, std::vector<double> &ydot, const double t) {
     double delta = gf_ * calc_delta(y);
+#pragma omp parallel for
     for (int i = 0; i < Nspins_; i++) {
         ydot[i]                  = - 2 * epsk_[i] * y[i + Nspins_];
         ydot[i + Nspins_]     =   2 * epsk_[i] * y[i] + 2 * delta * y[i + 2 * Nspins_];
